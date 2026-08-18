@@ -5,12 +5,13 @@
 #include "LogLevel.h"
 
 class IJournal {
+public:
     virtual ~IJournal() = default;
 
     virtual void write(const std::string& message,
                       LogLevel level) = 0;
 
-    virtual void set_default_level(LogLevel level);
+    virtual void set_default_level(LogLevel level) = 0;
 };
 
 #endif // C_CPP_ASSIGNMENT_IJOURNAL_H

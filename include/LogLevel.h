@@ -3,9 +3,9 @@
 #define C_CPP_ASSIGNMENT_LOGLEVEL_H
 
 enum class LogLevel {
-    low,
-    medium,
-    high
+    low = 0,
+    medium = 1,
+    high= 2
 };
 
 
