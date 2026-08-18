@@ -8,5 +8,14 @@ enum class LogLevel {
     high= 2
 };
 
+inline std::string to_string(LogLevel level) {
+    switch (level) {
+        case LogLevel::low: return "low";
+        case LogLevel::medium: return "medium";
+        case LogLevel::high: return "high";
+    }
+    return "unknown";
+}
+
 
 #endif // C_CPP_ASSIGNMENT_LOGLEVEL_H

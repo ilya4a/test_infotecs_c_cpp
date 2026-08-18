@@ -9,7 +9,6 @@
 
 
 class FileJournal : public IJournal {
-
     std::ofstream journal;
     LogLevel journal_level;
 

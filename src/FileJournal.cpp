@@ -10,7 +10,11 @@ FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) {
 
     std::filesystem::create_directories(file_path.parent_path());
 
-    journal = std::ofstream(file_path);
+    journal.open(file_path, std::ios::app);
+
+    if (!journal.is_open()) {
+        throw std::runtime_error("Can't open journal file");
+    }
 
     journal_level= level;
 }
@@ -26,13 +30,8 @@ std::string current_time_str() {
 }
 
 void FileJournal::write(const std::string &message, LogLevel message_level) {
-
-    if (!journal.is_open()) {
-        throw std::runtime_error("Can't open file");
-    }
-
     if (message_level < journal_level) return;
-    journal << '\n' << current_time_str() << ' ' << message;
+    journal << '\n' << current_time_str() << ' ' << to_string(message_level) << ' ' << message;
 }
 
 void FileJournal::set_default_level(LogLevel level) {
