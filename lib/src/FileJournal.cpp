@@ -23,8 +23,7 @@ FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) : jour
         file_path = std::filesystem::current_path();
         file_path /= generate_filename();
     }
-
-    std::filesystem::create_directories(file_path.parent_path());
+    if (!file_path.parent_path().empty()) std::filesystem::create_directories(file_path.parent_path());
 
     journal.open(file_path, std::ios::app);
 
@@ -47,8 +46,6 @@ std::string current_time_str() {
 int temp = 0;
 
 void FileJournal::write(const Message& message) {
-    temp+=1;
-    if (temp == 2) throw 1;
     if (message.message_level < journal_level) return;
     journal << current_time_str() << ' ' << to_string(message.message_level) << ' ' << message.message_text << std::endl;
 }

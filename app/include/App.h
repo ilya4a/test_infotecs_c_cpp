@@ -27,6 +27,7 @@ public:
 
     void run();
 
+    static std::pair<std::string, std::string> read_pair_input();
     ~App();
 
 };

@@ -2,6 +2,8 @@
 #ifndef C_CPP_ASSIGNMENT_LOGLEVEL_H
 #define C_CPP_ASSIGNMENT_LOGLEVEL_H
 
+#include <stdexcept>
+
 enum class LogLevel {
     low = 0,
     medium = 1,
@@ -15,6 +17,20 @@ inline std::string to_string(LogLevel level) {
         case LogLevel::high: return "high";
     }
     return "unknown";
+}
+
+
+inline LogLevel from_string(const std::string& str) {
+    if (str == "--low") return LogLevel::low;
+    if (str == "-l") return LogLevel::low;
+    if (str == "--medium") return LogLevel::medium;
+    if (str == "-m") return LogLevel::medium;
+    if (str == "--high") return LogLevel::high;
+    if (str == "-h") return LogLevel::high;
+
+    if (str == "") return LogLevel::low;
+
+    throw std::invalid_argument("Unknown log level");
 }
 
 

@@ -13,7 +13,6 @@ target_include_directories(journal PUBLIC
         app/include
 )
 
-
 add_executable(c_cpp_assignment app/src/main.cpp
         app/include/App.cpp
         app/include/App.h
