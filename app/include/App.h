@@ -2,20 +2,28 @@
 #ifndef C_CPP_ASSIGNMENT_APP_H
 #define C_CPP_ASSIGNMENT_APP_H
 #include <memory>
+#include <thread>
 
 #include "IJournal.h"
+#include "ThreadSafeQueue.h"
 
 class App {
     std::unique_ptr<IJournal> journal;
+    std::thread writer;
+    ThreadSafeQueue queue;
 
 
 public:
 
-    App(std::unique_ptr<IJournal> journal) : journal(std::move(journal)) {
-
+    App(std::unique_ptr<IJournal> journal) : journal(std::move(journal)){
+        writer = std::thread([this]{writer_func();});
     }
 
-    void handle_message(std::string&& str);
+    void writer_func();
+
+    void handle_message(Message message);
+
+    ~App();
 
 };
 

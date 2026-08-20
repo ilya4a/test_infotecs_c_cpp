@@ -13,7 +13,6 @@ static std::string generate_filename() {
     return std::string(DefaultLogName)  + std::to_string(ms) + std::string(DefaultLogExt);
 }
 
-
 FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) : journal_level(level){
 
     if (std::filesystem::is_directory(file_path)) {
@@ -47,7 +46,7 @@ std::string current_time_str() {
 
 void FileJournal::write(const Message& message) {
     if (message.message_level < journal_level) return;
-    journal << '\n' << current_time_str() << ' ' << to_string(message.message_level) << ' ' << message.message_text;
+    journal << current_time_str() << ' ' << to_string(message.message_level) << ' ' << message.message_text << std::endl;
 }
 
 void FileJournal::set_default_level(LogLevel level) {
