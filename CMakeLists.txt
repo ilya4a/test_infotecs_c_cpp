@@ -5,13 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(journal SHARED
-        src/FileJournal.cpp
+        lib/src/FileJournal.cpp
 )
 
 target_include_directories(journal PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        lib/include
+        app/include
 )
 
 
-add_executable(c_cpp_assignment main.cpp)
+add_executable(c_cpp_assignment app/src/main.cpp
+        app/include/App.cpp
+        app/include/App.h)
 target_link_libraries(c_cpp_assignment PRIVATE journal)

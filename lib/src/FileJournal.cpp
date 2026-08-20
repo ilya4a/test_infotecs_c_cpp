@@ -3,10 +3,27 @@
 
 #include <fstream>
 
+constexpr const char* DefaultLogName = "journal_";
+constexpr const char* DefaultLogExt = ".txt";
 
-FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) {
 
-    if (file_path.empty()) file_path = std::filesystem::current_path();
+static std::string generate_filename() {
+    auto now = std::chrono::system_clock::now();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+    return std::string(DefaultLogName)  + std::to_string(ms) + std::string(DefaultLogExt);
+}
+
+
+FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) : journal_level(level){
+
+    if (std::filesystem::is_directory(file_path)) {
+        throw std::runtime_error("Journal file is directory");
+    }
+
+    if (file_path.empty()) {
+        file_path = std::filesystem::current_path();
+        file_path /= generate_filename();
+    }
 
     std::filesystem::create_directories(file_path.parent_path());
 
@@ -16,7 +33,6 @@ FileJournal::FileJournal(std::filesystem::path file_path, LogLevel level) {
         throw std::runtime_error("Can't open journal file");
     }
 
-    journal_level= level;
 }
 
 std::string current_time_str() {
