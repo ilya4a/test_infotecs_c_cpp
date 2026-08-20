@@ -3,13 +3,13 @@
 #include <string>
 
 #include "LogLevel.h"
+#include "Message.h"
 
 class IJournal {
 public:
     virtual ~IJournal() = default;
 
-    virtual void write(const std::string& message,
-                      LogLevel level) = 0;
+    virtual void write(const Message& message) = 0;
 
     virtual void set_default_level(LogLevel level) = 0;
 };

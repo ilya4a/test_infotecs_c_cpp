@@ -16,5 +16,8 @@ target_include_directories(journal PUBLIC
 
 add_executable(c_cpp_assignment app/src/main.cpp
         app/include/App.cpp
-        app/include/App.h)
+        app/include/App.h
+        app/include/ThreadSafeQueue.cpp
+        app/include/ThreadSafeQueue.h
+        lib/include/Message.h)
 target_link_libraries(c_cpp_assignment PRIVATE journal)

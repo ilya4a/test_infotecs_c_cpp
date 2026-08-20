@@ -45,9 +45,9 @@ std::string current_time_str() {
     return buf;
 }
 
-void FileJournal::write(const std::string &message, LogLevel message_level) {
-    if (message_level < journal_level) return;
-    journal << '\n' << current_time_str() << ' ' << to_string(message_level) << ' ' << message;
+void FileJournal::write(const Message& message) {
+    if (message.message_level < journal_level) return;
+    journal << '\n' << current_time_str() << ' ' << to_string(message.message_level) << ' ' << message.message_text;
 }
 
 void FileJournal::set_default_level(LogLevel level) {

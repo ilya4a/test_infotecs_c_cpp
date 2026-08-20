@@ -18,7 +18,7 @@ public:
 
     ~FileJournal() override = default;
 
-    void write(const std::string &message, LogLevel level) override;
+    void write(const Message& message) override;
     void set_default_level(LogLevel level) override;
 };
 
