@@ -12,6 +12,12 @@ class App {
     std::thread writer;
     ThreadSafeQueue queue;
 
+    std::exception_ptr writer_exception;
+
+    void writer_func();
+
+    void handle_message(Message message);
+
 
 public:
 
@@ -19,9 +25,7 @@ public:
         writer = std::thread([this]{writer_func();});
     }
 
-    void writer_func();
-
-    void handle_message(Message message);
+    void run();
 
     ~App();
 

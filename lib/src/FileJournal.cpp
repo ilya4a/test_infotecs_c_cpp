@@ -44,7 +44,11 @@ std::string current_time_str() {
     return buf;
 }
 
+int temp = 0;
+
 void FileJournal::write(const Message& message) {
+    temp+=1;
+    if (temp == 2) throw 1;
     if (message.message_level < journal_level) return;
     journal << current_time_str() << ' ' << to_string(message.message_level) << ' ' << message.message_text << std::endl;
 }

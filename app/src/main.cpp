@@ -16,11 +16,6 @@ int main() {
 
     std::unique_ptr<FileJournal> fj = std::make_unique<FileJournal>("");
     App app(std::move(fj));
-    std::string line;
-    while (1) {
-        std::getline(std::cin, line);
-        app.handle_message(Message(line, LogLevel::low));
-
-    }
+    app.run();
     return 0;
 }
