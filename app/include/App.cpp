@@ -7,7 +7,6 @@
 #include "ThreadSafeQueue.h"
 
 void App::writer_func() {
-
     try {
         while (auto message = queue.pop()) {
             journal->write(*message);
@@ -21,14 +20,20 @@ void App::writer_func() {
 void App::handle_message(Message message) {
     queue.push(std::move(message));
 }
+App::App(std::unique_ptr<IJournal> journal)  : journal(std::move(journal)){
+    writer = std::thread([this]{writer_func();});
+}
 
 void App::run() {
     std::string line;
     std::pair<std::string, std::string> pair;
     while (1) {
-
-        std::getline(std::cin, line);
         pair = read_pair_input();
+
+        if (pair.first.empty() && !pair.second.empty()) {
+
+        }
+
         if (writer_exception) {
             std::rethrow_exception(writer_exception);
         }
@@ -39,11 +44,19 @@ void App::run() {
 
 std::pair<std::string, std::string> App::read_pair_input() {
     std::string text, option, rest;
-    char ch;
-    while (std::cin.get(ch) && ch != '"');
-    if (!std::cin) throw std::runtime_error("invalid args");
-    while (std::cin.get(ch) && ch != '"') text += ch;
-    if (!std::cin) throw std::runtime_error("invalid args");
+    char ch = ' ';
+    while (std::cin.get(ch) && ch != '\n' && ch != '"' && ch != '-'){}
+
+    if (ch == '\n') return {text, option};
+
+    if (ch == '"') {
+        if (!std::cin) throw std::runtime_error("invalid args");
+        while (std::cin.get(ch) && ch != '"') text += ch;
+        if (!std::cin) throw std::runtime_error("invalid args");
+    }else {
+        option += ch;
+    }
+
     std::getline(std::cin, rest);
     std::istringstream iss(rest);
     iss >> option;

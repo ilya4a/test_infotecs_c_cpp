@@ -21,9 +21,7 @@ class App {
 
 public:
 
-    App(std::unique_ptr<IJournal> journal) : journal(std::move(journal)){
-        writer = std::thread([this]{writer_func();});
-    }
+    App(std::unique_ptr<IJournal> journal);
 
     void run();
 
