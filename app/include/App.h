@@ -7,10 +7,13 @@
 #include "IJournal.h"
 #include "ThreadSafeQueue.h"
 
+
+
+
 class App {
     std::unique_ptr<IJournal> journal;
     std::thread writer;
-    ThreadSafeQueue queue;
+    ThreadSafeQueue<Message> queue;
 
     std::exception_ptr writer_exception;
 
