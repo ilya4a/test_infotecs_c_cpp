@@ -8,8 +8,14 @@
 
 void App::writer_func() {
     try {
-        while (auto message = queue.pop()) {
-            journal->write(*message);
+        while (auto command = queue.pop()) {
+            if (command->type == Command::CommandType::Write) {
+                journal->write(command->message);
+            }else if (command->type == Command::CommandType::ChangeLevel) {
+                journal->set_default_level(command->message.message_level);
+            }else {
+                throw std::runtime_error("Unknown type of command");
+            }
         }
     }catch (...) {
         writer_exception = std::current_exception();
@@ -17,9 +23,7 @@ void App::writer_func() {
     }
 }
 
-void App::handle_message(Message message) {
-    queue.push(std::move(message));
-}
+
 App::App(std::unique_ptr<IJournal> journal)  : journal(std::move(journal)){
     writer = std::thread([this]{writer_func();});
 }
@@ -27,18 +31,30 @@ App::App(std::unique_ptr<IJournal> journal)  : journal(std::move(journal)){
 void App::run() {
     std::string line;
     std::pair<std::string, std::string> pair;
-    while (1) {
+
+
+    while (!queue.closed()) {
+
         pair = read_pair_input();
+        std::cout << "first: " << pair.first << std::endl;
+        std::cout << "second: " << pair.second << std::endl;
 
-        if (pair.first.empty() && !pair.second.empty()) {
+        Message message(pair.first, LogLevel_from_string(pair.second));
 
+        if (pair.first.empty()) {
+            if (!pair.second.empty()) {
+                Command command(message, Command::CommandType::ChangeLevel);
+                queue.push(command);
+            }
+        }else {
+            Command command(message, Command::CommandType::Write);
+            queue.push(command);
         }
 
         if (writer_exception) {
             std::rethrow_exception(writer_exception);
         }
 
-        handle_message(Message(pair.first, from_string(pair.second)));
     }
 }
 
@@ -59,8 +75,10 @@ std::pair<std::string, std::string> App::read_pair_input() {
 
     std::getline(std::cin, rest);
     std::istringstream iss(rest);
+
+    std::string temp = option;
     iss >> option;
-    return {text, option};
+    return {text, temp + option};
 }
 
 App::~App() {

@@ -17,6 +17,11 @@ class ThreadSafeQueue {
     bool is_closed = false;
 
 public:
+
+    bool closed() {
+        return is_closed;
+    }
+
     void push(T message) {
 
         std::unique_lock<std::mutex> lock(mutex);

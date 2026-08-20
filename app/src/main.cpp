@@ -16,7 +16,7 @@ int main() {
     std::cout << "first: " << input.first << std::endl;
     std::cout << "second: " << input.second << std::endl;
 
-    std::unique_ptr<FileJournal> fj = std::make_unique<FileJournal>(input.first, from_string(input.second));
+    std::unique_ptr<FileJournal> fj = std::make_unique<FileJournal>(input.first, LogLevel_from_string(input.second));
 
     App app(std::move(fj));
     app.run();
