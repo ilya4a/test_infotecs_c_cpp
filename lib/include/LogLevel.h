@@ -21,16 +21,16 @@ inline std::string LogLevel_to_string(LogLevel level) {
 
 
 inline LogLevel LogLevel_from_string(const std::string& str) {
-    if (str == "--low") return LogLevel::low;
-    if (str == "-l") return LogLevel::low;
-    if (str == "--medium") return LogLevel::medium;
-    if (str == "-m") return LogLevel::medium;
-    if (str == "--high") return LogLevel::high;
-    if (str == "-h") return LogLevel::high;
+    if (str == "-low") return LogLevel::low;
+    if (str == "l") return LogLevel::low;
+    if (str == "-medium") return LogLevel::medium;
+    if (str == "m") return LogLevel::medium;
+    if (str == "-high") return LogLevel::high;
+    if (str == "h") return LogLevel::high;
 
     if (str == "") return LogLevel::low;
 
-    throw std::invalid_argument("Unknown log level");
+    throw std::invalid_argument("unknown log level");
 }
 
 
