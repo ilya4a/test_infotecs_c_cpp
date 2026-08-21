@@ -1,12 +1,16 @@
 
 #include "App.h"
 
+#include <algorithm>
+#include <atomic>
+#include <cctype>
+#include <csignal>
 #include <iostream>
 #include <sstream>
-#include <algorithm>
-#include <cctype>
 
 #include "ThreadSafeQueue.h"
+
+
 
 void App::writer_func() {
     try {
@@ -39,27 +43,40 @@ void App::run() {
 
     while (!queue.closed()) {
         try {
+            std::cout << "\nEnter message: " << std::flush;
             pair = read_pair_input();
-            std::cout << "first: " << pair.first << std::endl;
-            std::cout << "second: " << pair.second << std::endl;
+
+            std::string option = pair.second;
+            if ( option== "-help") {
+                std::cout << help << std::endl;
+                continue;
+            }
+
+            if (option == "q" || option == "-quit") {
+                break;
+            }
+
             log_level = LogLevel_from_string(pair.second);
+
+
         }catch (const std::exception& e) {
-            std::cerr << "Error: " << e.what() << std::endl;
+            std::cout << "Error: " << e.what() << std::endl;
             continue;
         }
-        
         Message message(pair.first, log_level);
 
         if (pair.first.empty()) {
             if (!pair.second.empty()) {
                 Command command(message, Command::CommandType::ChangeLevel);
                 queue.push(command);
+                std::cout << "Level changed" << std::endl;
             }else {
-                std::cerr << "Error: message is empty" << std::endl;
+                std::cout << "Error: message is empty" << std::endl;
             }
         }else {
             Command command(message, Command::CommandType::Write);
             queue.push(command);
+            std::cout << "Message sent" << std::endl;
         }
 
         if (writer_exception) {

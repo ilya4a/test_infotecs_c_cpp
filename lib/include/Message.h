@@ -2,7 +2,6 @@
 #define C_CPP_ASSIGNMENT_MESSAGE_H
 
 #include <string>
-#include <utility>
 #include "LogLevel.h"
 
 struct Message {

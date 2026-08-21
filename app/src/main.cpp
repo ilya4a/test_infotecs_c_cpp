@@ -5,17 +5,29 @@
 #include <utility>
 #include <string>
 
-int main() {
 
+
+
+int main() {
     try {
+
+        std::cout << "Enter filename and default log level (press Enter to use default):\n";
+        std::cout << "Usage: --help" << std::endl;
+
         std::pair<std::string, std::string> input = App::read_pair_input();
 
-        // std::cout << "first: " << input.first << std::endl;
-        // std::cout << "second: " << input.second << std::endl;
+        while (input.second == "-help" ) {
+            std::cout << help << std::endl;
+            std::cout << "Enter filename and default log level (press Enter to use default):\n";
+            std::cout << "Usage: --help" << std::endl;
+            input = App::read_pair_input();
+        }
+
         LogLevel level = LogLevel_from_string(input.second);
 
         std::unique_ptr<FileJournal> fj = std::make_unique<FileJournal>(input.first, level );
         fj->write_forced("JOURNAL. log level: " + LogLevel_to_string(level));
+        std::cout << "Journal created" << std::endl;
 
         App app(std::move(fj));
         app.run();

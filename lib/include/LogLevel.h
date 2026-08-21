@@ -16,7 +16,8 @@ inline std::string LogLevel_to_string(LogLevel level) {
         case LogLevel::medium: return "medium";
         case LogLevel::high: return "high";
     }
-    return "unknown";
+
+    throw std::invalid_argument("unknown string to log level");
 }
 
 
