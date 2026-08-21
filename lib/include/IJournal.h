@@ -10,6 +10,9 @@ public:
     virtual ~IJournal() = default;
 
     virtual void write(const Message& message) = 0;
+    virtual void write_forced(std::string message_text) = 0;
+
+
 
     virtual void set_default_level(LogLevel level) = 0;
 };

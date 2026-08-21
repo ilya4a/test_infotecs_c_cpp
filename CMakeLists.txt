@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(journal SHARED
         lib/src/FileJournal.cpp
+        lib/src/Message.cpp
 )
 
 target_include_directories(journal PUBLIC
@@ -14,9 +15,11 @@ target_include_directories(journal PUBLIC
 )
 
 add_executable(c_cpp_assignment app/src/main.cpp
-        app/include/App.cpp
+        app/src/App.cpp
         app/include/App.h
-        app/include/ThreadSafeQueue.cpp
+        app/src/ThreadSafeQueue.cpp
         app/include/ThreadSafeQueue.h
-        lib/include/Message.h)
+        lib/include/Message.h
+        app/include/Command.cpp
+        app/include/Command.h)
 target_link_libraries(c_cpp_assignment PRIVATE journal)

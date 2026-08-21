@@ -9,7 +9,7 @@ struct Message {
     const std::string message_text;
     const LogLevel message_level;
 
-    Message(std::string message, LogLevel message_level) : message_text(std::move(message)), message_level(message_level){};
+    Message(std::string message, LogLevel message_level);
 };
 
 

@@ -12,7 +12,9 @@ void App::writer_func() {
             if (command->type == Command::CommandType::Write) {
                 journal->write(command->message);
             }else if (command->type == Command::CommandType::ChangeLevel) {
-                journal->set_default_level(command->message.message_level);
+                LogLevel level = command->message.message_level;
+                journal->set_default_level(level);
+                journal->write_forced(ChangeLevel_command_message + LogLevel_to_string(level));
             }else {
                 throw std::runtime_error("Unknown type of command");
             }
@@ -36,8 +38,8 @@ void App::run() {
     while (!queue.closed()) {
 
         pair = read_pair_input();
-        std::cout << "first: " << pair.first << std::endl;
-        std::cout << "second: " << pair.second << std::endl;
+        // std::cout << "first: " << pair.first << std::endl;
+        // std::cout << "second: " << pair.second << std::endl;
 
         Message message(pair.first, LogLevel_from_string(pair.second));
 
@@ -45,6 +47,8 @@ void App::run() {
             if (!pair.second.empty()) {
                 Command command(message, Command::CommandType::ChangeLevel);
                 queue.push(command);
+            }else {
+                std::cerr << "Error: message cannot be empty and must be enclosed in double quotes.\n" << std::endl;
             }
         }else {
             Command command(message, Command::CommandType::Write);

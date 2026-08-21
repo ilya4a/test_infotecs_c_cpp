@@ -50,6 +50,10 @@ void FileJournal::write(const Message& message) {
     journal << current_time_str() << ' ' << LogLevel_to_string(message.message_level) << ' ' << message.message_text << std::endl;
 }
 
+void FileJournal::write_forced(std::string message_text) {
+    journal << current_time_str() <<' ' << message_text << std::endl;
+}
+
 void FileJournal::set_default_level(LogLevel level) {
     journal_level = level;
 }

@@ -4,22 +4,10 @@
 #include <memory>
 #include <thread>
 
+#include "Command.h"
 #include "IJournal.h"
 #include "ThreadSafeQueue.h"
 
-
-struct Command {
-    enum class CommandType {
-        Write,
-        ChangeLevel
-    };
-
-    Message message;
-    CommandType type;
-
-    Command(Message message, CommandType type) :message(std::move(message)), type(type){};
-
-};
 
 class App {
     std::unique_ptr<IJournal> journal;
@@ -27,6 +15,8 @@ class App {
     ThreadSafeQueue<Command> queue;
 
     std::exception_ptr writer_exception;
+
+    static inline std::string ChangeLevel_command_message = "journal level changed: ";
 
     void writer_func();
 
