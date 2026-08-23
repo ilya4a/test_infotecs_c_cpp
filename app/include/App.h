@@ -1,8 +1,6 @@
 
 #ifndef C_CPP_ASSIGNMENT_APP_H
 #define C_CPP_ASSIGNMENT_APP_H
-#include <atomic>
-#include <csignal>
 #include <memory>
 #include <thread>
 

@@ -2,9 +2,7 @@
 #include "App.h"
 
 #include <algorithm>
-#include <atomic>
 #include <cctype>
-#include <csignal>
 #include <iostream>
 #include <sstream>
 
@@ -128,14 +126,13 @@ std::pair<std::string, std::string> App::read_pair_input() {
 
         if (option_pos != std::string::npos) {
             for (size_t i = 0; i < option_pos; i++) {
-                if (!std::isspace(line[i]))
-                    throw std::runtime_error("invalid args");
+                if (!std::isspace(line[i])) throw std::runtime_error("invalid arguments. To change the journal level, use: -l/-m/-h.");
             }
 
             option = line.substr(option_pos + 1);
         }else {
             for (size_t i = 0; i < line.size(); i++) {
-                if (!std::isspace(line[i])) throw std::runtime_error("invalid args");
+                if (!std::isspace(line[i])) throw std::runtime_error("invalid arguments. To change the journal level, use: -l/-m/-h.");
             }
         }
     }
