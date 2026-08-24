@@ -4,12 +4,6 @@ C++ Test Assignment: Multithreaded Log Writing Implementation
 
 (C/C++ Developer)
 
-## Features
-
-* Dynamic journal library.
-* Thread-safe message passing through `ThreadSafeQueue`.
-* Handling of input and writing errors.
-
 ## Running
 input format: 
 
