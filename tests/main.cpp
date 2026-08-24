@@ -4,7 +4,6 @@ int testFileJournal();
 int testApp();
 
 int main() {
-
     testThreadSafeQueue();
     testFileJournal();
     testApp();

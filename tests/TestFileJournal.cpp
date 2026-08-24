@@ -22,14 +22,9 @@ void test_file_is_created() {
 
 void test_parent_directories_are_created() {
     const std::filesystem::path path =
-        std::filesystem::temp_directory_path() /
-        "file_journal_test" /
-        "dir1" /
-        "dir2" /
-        "journal.txt";
+        std::filesystem::temp_directory_path() / "file_journal_test" / "dir1" / "dir2" / "journal.txt";
 
-    const std::filesystem::path root =
-        std::filesystem::temp_directory_path() / "file_journal_test";
+    const std::filesystem::path root = std::filesystem::temp_directory_path() / "file_journal_test";
 
     std::filesystem::remove_all(root);
 
@@ -45,29 +40,20 @@ void test_parent_directories_are_created() {
 }
 
 void test_write_respects_log_level() {
-    const std::filesystem::path path =
-        std::filesystem::temp_directory_path() / "file_journal_level.txt";
+    const std::filesystem::path path = std::filesystem::temp_directory_path() / "file_journal_level.txt";
 
     std::filesystem::remove(path);
 
     {
         FileJournal journal(path, LogLevel::medium);
 
-        Message low_message{
-            "low message",
-            LogLevel::low
+        Message low_message { "low message", LogLevel::low
 
         };
 
-        Message medium_message{
-            "medium message",
-            LogLevel::medium
-        };
+        Message medium_message { "medium message", LogLevel::medium };
 
-        Message high_message{
-            "high message",
-            LogLevel::high
-        };
+        Message high_message { "high message", LogLevel::high };
 
         journal.write(low_message);
         journal.write(medium_message);
@@ -78,10 +64,7 @@ void test_write_respects_log_level() {
 
     assert(file.is_open());
 
-    std::string content(
-        (std::istreambuf_iterator<char>(file)),
-        std::istreambuf_iterator<char>()
-    );
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
     assert(content.find("low message") == std::string::npos);
     assert(content.find("medium message") != std::string::npos);
@@ -97,19 +80,4 @@ int testFileJournal() {
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

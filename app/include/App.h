@@ -1,4 +1,3 @@
-
 #ifndef C_CPP_ASSIGNMENT_APP_H
 #define C_CPP_ASSIGNMENT_APP_H
 
@@ -8,7 +7,6 @@
 #include "Command.h"
 #include "IJournal.h"
 #include "ThreadSafeQueue.h"
-
 
 class App {
     std::unique_ptr<IJournal> journal;
@@ -20,20 +18,19 @@ class App {
     static inline std::string ChangeLevel_command_message = "journal level changed: ";
 
     void writer_func();
-public:
+
+  public:
     App(std::unique_ptr<IJournal> journal);
 
     void run();
     static std::pair<std::string, std::string> read_pair_input();
 
-
-    App(const App&) = delete;
-    App& operator=(const App&) = delete;
-    App(App&&) = delete;
-    App& operator=(App&&) = delete;
+    App(const App &) = delete;
+    App &operator=(const App &) = delete;
+    App(App &&) = delete;
+    App &operator=(App &&) = delete;
 
     ~App();
-
 };
 
 const std::string help = R"(Usage:
@@ -67,6 +64,5 @@ Change default journal level:
 
 The file log level is the minimum level of messages written to the log.
 )";
-
 
 #endif // C_CPP_ASSIGNMENT_APP_H

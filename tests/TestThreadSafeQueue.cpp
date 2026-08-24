@@ -1,11 +1,8 @@
-
-
-#include <iostream>
 #include <cassert>
 #include <chrono>
-#include <thread>
+#include <iostream>
 #include <stdexcept>
-
+#include <thread>
 
 #include "ThreadSafeQueue.h"
 
@@ -25,7 +22,7 @@ void test_push_after_close() {
 
     try {
         queue.push(42);
-    } catch (const std::runtime_error&) {
+    } catch (const std::runtime_error &) {
         exception_thrown = true;
     }
 
