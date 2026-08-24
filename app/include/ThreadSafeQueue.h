@@ -5,6 +5,7 @@
 #include <mutex>
 #include <optional>
 #include <queue>
+
 #include "Message.h"
 
 template<typename T>

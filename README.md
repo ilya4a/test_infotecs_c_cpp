@@ -122,4 +122,9 @@ Level changed
 
 ## Building
 
+```text
+make
+make test
+./build/bin/app
+```
 

@@ -1,6 +1,7 @@
 
 #ifndef C_CPP_ASSIGNMENT_APP_H
 #define C_CPP_ASSIGNMENT_APP_H
+
 #include <memory>
 #include <thread>
 
