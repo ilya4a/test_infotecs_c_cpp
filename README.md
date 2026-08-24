@@ -1,20 +1,17 @@
 # Multithreaded Journal
 
-Тестовое задание C++ -- многопоточная реализация
-записи сообщений в журнал
+C++ Test Assignment: Multithreaded Log Writing Implementation 
+
+(C/C++ Developer)
 
 ## Features
 
 * Dynamic journal library.
 * Thread-safe message passing through `ThreadSafeQueue`.
-* Handling of input and file-writing errors.
+* Handling of input and writing errors.
 
 ## Running
-
-On startup, the application asks for:
-
-1. The path to the journal file.
-2. The default journal severity level.
+input format: 
 
 ```text 
 "path/to/file" -(l/m/h)
@@ -24,7 +21,8 @@ On startup, the application asks for:
 ```
 
 The path can be either absolute or relative to the current working directory. 
-The file name can be omitted. In this case, the journal is created in the current directory using the following name format:
+The file name can be omitted. In this case, the journal is created in the current 
+directory using the default name format:
 
 ```text
 journal_%Y-%m-%d_%H:%M:%S.txt
@@ -34,33 +32,20 @@ The default severity level can also be omitted. In this case, `LOW` is used.
 
 ## Input Format
 
-A message can be entered as:
-
 ```text
 "message" -(l/m/h)
 
 ```
-
 The message level can be omitted. In this case, `LOW` is used.
 
-To change the minimum journal severity level during runtime:
 
+To change default journal severity level, enter only -l/-m/-h:
 ```text
--l
--m
--h
-```
-
-For example:
-
-```text
-"message" -m
 -m
 ```
 
-In the first case, a `MEDIUM`-level message is written to the journal. In the second case, the minimum journal severity level is changed to `MEDIUM`.
 The default message level cannot be changed - it is always `LOW`
-
+default
 To exit the application:
 
 ```text
@@ -88,20 +73,6 @@ Changes to the journal level are also recorded as service messages:
 ```text
 2026-08-23_04:04:43 journal level changed: medium
 ```
-
-## Error Handling
-
-Non-critical user input errors are handled without terminating the application:
-
-```text
-Error: missing closing quote
-Error: invalid args...
-Error: message is empty
-Error: unknown log level
-```
-
-Critical errors related to the journal or file operations result in a controlled application shutdown with an appropriate error message.
-
 
 ## Examples 
 ```text

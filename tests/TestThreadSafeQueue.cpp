@@ -1,6 +1,5 @@
 #include <cassert>
 #include <chrono>
-#include <iostream>
 #include <stdexcept>
 #include <thread>
 
