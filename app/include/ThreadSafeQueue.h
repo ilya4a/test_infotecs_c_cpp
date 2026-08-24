@@ -22,11 +22,11 @@ public:
         return is_closed;
     }
 
-    void push(T message) {
+    void push(T data) {
 
         std::unique_lock<std::mutex> lock(mutex);
         if (is_closed) throw std::runtime_error("Queue is closed");;
-        queue.push(std::move(message));
+        queue.push(std::move(data));
         lock.unlock();
 
         cv.notify_one();

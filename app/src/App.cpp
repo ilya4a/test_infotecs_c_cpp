@@ -8,8 +8,6 @@
 
 #include "ThreadSafeQueue.h"
 
-
-
 void App::writer_func() {
     try {
         while (auto command = queue.pop()) {
